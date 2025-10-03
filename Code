@@ -1,0 +1,13 @@
+import kagglehub
+import pandas as pd
+
+path = kagglehub.dataset_download("ishanshrivastava28/superstore-sales")
+df = pd.read_csv(path + "/Superstore_Sales.csv")
+df['Order Date'] = pd.to_datetime(df['Order Date'])
+df['Ship Date'] = pd.to_datetime(df['Ship Date'])
+df['Month-Year'] = df['Order Date'].dt.to_period('M').astype(str)
+df['Year'] = df['Order Date'].dt.year
+df['Month'] = df['Order Date'].dt.month
+df['Quarter'] = df['Order Date'].dt.quarter
+df = df[['Order Date','Ship Date','Month-Year','Year','Month','Quarter','Region','Category','Sub-Category','Sales','Profit']]
+df.to_csv("Cleaned_Superstore_Sales.csv", index=False)
